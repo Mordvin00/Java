@@ -1,0 +1,16 @@
+мар. 11, 2024 7:08:58 PM ContentFolder writeToFile
+WARNING: ошибка записи
+мар. 11, 2024 7:09:07 PM ContentFolder writeToFile
+WARNING: ошибка записи
+мар. 11, 2024 7:10:35 PM ContentFolder writeToFile
+INFO: данные успешно записаны в файл
+мар. 11, 2024 7:12:22 PM ContentFolder writeToFile
+INFO: данные успешно записаны в файл
+мар. 11, 2024 7:12:31 PM ContentFolder writeToFile
+INFO: данные успешно записаны в файл
+мар. 11, 2024 7:12:36 PM ContentFolder writeToFile
+INFO: данные успешно записаны в файл
+мар. 11, 2024 7:12:56 PM ContentFolder writeToFile
+INFO: данные успешно записаны в файл
+мар. 11, 2024 7:15:26 PM ContentFolder writeToFile
+INFO: данные успешно записаны в файл
