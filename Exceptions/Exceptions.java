@@ -1,4 +1,81 @@
 /*
+Напишите приложение, которое будет запрашивать у пользователя следующие данные в произвольном порядке, разделенные пробелом:
+Фамилия Имя Отчество датарождения номертелефона пол
+Форматы данных:
+фамилия, имя, отчество - строки
+дата_рождения - строка формата dd.mm.yyyy
+номер_телефона - целое беззнаковое число без форматирования
+пол - символ латиницей f или m.
+Приложение должно проверить введенные данные по количеству. Если количество не совпадает с требуемым, вернуть код ошибки, обработать его и показать пользователю сообщение, что он ввел меньше и больше данных, чем требуется.
+Приложение должно попытаться распарсить полученные значения и выделить из них требуемые параметры. Если форматы данных не совпадают, нужно бросить исключение, соответствующее типу проблемы. Можно использовать встроенные типы java и создать свои. Исключение должно быть корректно обработано, пользователю выведено сообщение с информацией, что именно неверно.
+Если всё введено и обработано верно, должен создаться файл с названием, равным фамилии, в него в одну строку должны записаться полученные данные, вида
+<Фамилия><Имя><Отчество><датарождения> <номертелефона><пол>
+Однофамильцы должны записаться в один и тот же файл, в отдельные строки.
+Не забудьте закрыть соединение с файлом.
+При возникновении проблемы с чтением-записью в файл, исключение должно быть корректно обработано, пользователь должен увидеть стектрейс ошибки.
+*/
+
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class Exceptions {
+    public static final int fieldsNumber = 6;
+    public static void main(String[] args) {
+        System.out.println("Введите следующие данные, разделенные пробелом: Фамилия Имя Отчество датарождения номертелефона пол:");
+        Scanner scanner = new Scanner(System.in, "ibm866");
+        String input = scanner.nextLine();
+        scanner.close();
+
+        String[] fields = input.split(" ");
+        if (fields.length != fieldsNumber) {
+            System.err.println("Неверное количество полей - " + fields.length + ", должно быть - 6!");
+        }
+        String lastName = fields[0];
+        String firstName = fields[1];
+        String middleName = fields[2];
+
+        LocalDate birthDate;
+        try {
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy");
+            birthDate = LocalDate.parse(fields[3], formatter);
+        } catch (DateTimeException e) {
+            System.err.println("Неверный формат даты рождения!");
+            return;
+        }
+        long phoneNumber;
+        try {
+            phoneNumber = Long.parseLong(fields[4]);
+        } catch (NumberFormatException e) {
+            System.err.println("Неверный формат номера телефона!");
+            return;
+        }
+        String gender = fields[5];
+        if (!"m".equals(gender) && !"f".equals(gender)) {
+            System.err.println("Неправильно указан пол контакта, введите f или m!");
+            return;
+        }
+
+        String fileName = "Exceptions/" + lastName + ".txt";
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName, true))) {
+            writer.write(lastName + " " + firstName + " " + middleName + " " +
+            birthDate.format(DateTimeFormatter.ISO_LOCAL_DATE) + " " + phoneNumber + " " + gender);
+            writer.newLine();
+        } catch (IOException e) {
+            System.err.println("Ошибка заиси!");
+        }
+    }
+}
+
+
+
+
+
+/*
 Задача 2
 Напишите программу, которая вычисляет значение выражения intArray[8] / d, гдеintArray- массив целых чисел, а d - делитель.
 Программа проверяет, имеется ли в массиве intArray элемент с индексом 8, и если нет, выводит сообщение о невозможности выполнения операции.
@@ -219,18 +296,18 @@ Cимвол `a`
 Result: Your input was - 0
 */
 
-public class Exceptions {
-    public static void main(String[] args) throws Exception {
-        char a;
-        a = 'f';
+// public class Exceptions {
+//     public static void main(String[] args) throws Exception {
+//         char a;
+//         a = 'f';
 
-        if (a == ' ') {
-            throw new Exception("Empty string has been input.");
-        } else {
-            System.out.println("Your input was - " + a);
-        }
-    }
-}
+//         if (a == ' ') {
+//             throw new Exception("Empty string has been input.");
+//         } else {
+//             System.out.println("Your input was - " + a);
+//         }
+//     }
+// }
 
 /*
 Идеальное решение:
